@@ -13,9 +13,8 @@ struct Data: Codable{
 
 class GitHubAPI: ObservableObject{
     var DataArray = [String]()
-    private let session = URLSession.shared
 
-    func searchUser(username: String){
+    func searchUser(username: String, after: @escaping ([Data]) -> ()){
         self.DataArray = []
         guard let url = URL(string: "https://api.github.com/users/" + "\(username)" + "/repos") else { return }
         var request = URLRequest(url: url)
@@ -34,10 +33,10 @@ class GitHubAPI: ObservableObject{
             }
             
             if let data = data{
-                let decoder = JSONDecoder()
-                guard let decodedResponse = try? decoder.decode([Data].self, from: data) else {print("Json decode error")
+                guard let decodedResponse = try? JSONDecoder().decode([Data].self, from: data) else {print("Json decode error")
                         return
                     }
+                after(decodedResponse)
                 decodedResponse.forEach { Data in
                     self.DataArray.append(Data.name)
                 }

@@ -11,7 +11,6 @@ struct AppView: View {
     @State private var name = ""
     @ObservedObject var api = GitHubAPI()
     
-    let fruits = ["Apple"]
     var body: some View {
         VStack{
             Spacer().frame(height: 20
