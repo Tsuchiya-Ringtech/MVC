@@ -11,8 +11,10 @@ struct Controller {
     let api: GitHubAPI
     let query: String
 
-    public func searchUser() {
-        api.searchUser(username: query)
+    public func searchUser(){
+        api.searchUser(username: query) { <#[Data]#> in
+            <#code#>
+        }
     }
     
     public func showDataArray() ->[String]{
